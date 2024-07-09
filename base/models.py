@@ -22,7 +22,7 @@ class Room(models.Model):
     # null is to allow it in database 
     # blank is in the form so the user can enter the field later so it can be left behind
     
-    # participants
+    participants = models.ManyToManyField(User, related_name='participents', blank=True)
     updated = models.DateTimeField(auto_now=True)
     # saves when saved everytime
     created = models.DateTimeField(auto_now_add=True)
@@ -31,7 +31,7 @@ class Room(models.Model):
     def __str__(self):
         return self.name
     class Meta: 
-        ordering = ['-updated', 'created']
+        ordering = ['-updated', '-created']
     
 class Message(models.Model):
     user = models.ForeignKey(User,  on_delete=models.CASCADE)
@@ -44,3 +44,6 @@ class Message(models.Model):
     
     def __str__(self):
         return self.body[0:50]
+    
+    class Meta: 
+        ordering = ['-updated', '-created']
